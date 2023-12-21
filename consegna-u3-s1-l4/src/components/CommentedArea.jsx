@@ -17,7 +17,6 @@ class CommentedArea extends Component {
             });
             if (response.ok) {
                 let comments = await response.json();
-                console.log(comments);
                 this.setState({ users: comments });
             }
         } catch (error) {
@@ -32,8 +31,8 @@ class CommentedArea extends Component {
     render() {
         return (
             <>
+                <AddComment bookId={this.props.bookId} />
                 <CommentsList usersArr={this.state.users} />
-                <AddComment />
             </>
         );
     }

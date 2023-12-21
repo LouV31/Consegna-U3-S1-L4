@@ -1,12 +1,12 @@
 import { Component } from "react";
 import { Button, Form } from "react-bootstrap";
-
+const URL = "https://striveschool-api.herokuapp.com/api/comments/";
 class AddComment extends Component {
     state = {
         user: {
             comment: "",
-            rate: "",
-            elementId: this.props.elementId,
+            rate: 1,
+            elementId: this.props.bookId,
         },
     };
 
@@ -14,12 +14,14 @@ class AddComment extends Component {
         this.setState({ user: { ...this.state.user, [propertyName]: propertyValue } });
     };
 
-    fetchAddComment = async () => {
+    handleSubmit = async (event) => {
+        event.preventDefault();
+
         try {
-            let response = await fetch(URL + this.props.bookId, {
+            let response = await fetch(URL, {
+                method: "POST",
+                body: JSON.stringify(this.state.user),
                 headers: {
-                    method: "POST",
-                    body: JSON.stringify(this.state.user),
                     "Content-Type": "application/json",
                     Authorization:
                         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTcxZDc4NDBkOGEyMDAwMThhNDhhNjEiLCJpYXQiOjE3MDMxNzE0NTQsImV4cCI6MTcwNDM4MTA1NH0._2iseQeMjVt8DTCPx5uMyOSdeijpFxbd1y9jmJnAHVo",
@@ -29,8 +31,8 @@ class AddComment extends Component {
                 this.setState({
                     user: {
                         comment: "",
-                        rate: "",
-                        elementId: "",
+                        rate: 1,
+                        elementId: this.props.bookId,
                     },
                 });
                 let userObj = await response.json();
@@ -40,15 +42,10 @@ class AddComment extends Component {
             console.log(error);
         }
     };
-
-    componentDidMount = () => {
-        this.fetchAddComment();
-    };
-
     render() {
         return (
-            <Form className="mt-5">
-                <Form.Group className="mb-2" controlId="formBasicEmail">
+            <Form className="mt-5" onSubmit={this.handleSubmit}>
+                <Form.Group className="mb-2">
                     <Form.Control
                         type="text"
                         placeholder="Lascia una recensione"
@@ -68,9 +65,12 @@ class AddComment extends Component {
                         <option>5</option>
                     </Form.Select>
                 </Form.Group>
-                <Button className="mt-2">Invia</Button>
+                <Button className="mt-2" type="submit">
+                    Invia
+                </Button>
             </Form>
         );
     }
 }
+
 export default AddComment;
