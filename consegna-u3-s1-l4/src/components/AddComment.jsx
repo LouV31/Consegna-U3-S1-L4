@@ -1,17 +1,17 @@
 import { Component } from "react";
-import { Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 
 class AddComment extends Component {
     state = {
         user: {
             comment: "",
             rate: "",
-            elementId: "",
+            elementId: this.props.elementId,
         },
     };
 
     handleChange = (propertyName, propertyValue) => {
-        this.setState({ reservation: { ...this.state.user, [propertyName]: propertyValue } });
+        this.setState({ user: { ...this.state.user, [propertyName]: propertyValue } });
     };
 
     fetchAddComment = async () => {
@@ -47,18 +47,28 @@ class AddComment extends Component {
 
     render() {
         return (
-            <Form>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form className="mt-5">
+                <Form.Group className="mb-2" controlId="formBasicEmail">
                     <Form.Control
                         type="text"
                         placeholder="Lascia una recensione"
                         value={this.state.user.comment}
-                        onChange={(event) =>
-                            // this.setState({ reservation: { ...this.state.reservation, name: event.target.value } })
-                            this.handleChange("comment", event.target.value)
-                        }
+                        onChange={(event) => this.handleChange("comment", event.target.value)}
                     />
                 </Form.Group>
+                <Form.Group>
+                    <Form.Select
+                        value={this.state.user.rate}
+                        onChange={(event) => this.handleChange("rate", event.target.value)}
+                    >
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </Form.Select>
+                </Form.Group>
+                <Button className="mt-2">Invia</Button>
             </Form>
         );
     }
