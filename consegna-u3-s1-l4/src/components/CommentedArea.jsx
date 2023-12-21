@@ -1,5 +1,7 @@
 import { Component } from "react";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
+import CommentsList from "./CommentsList";
+
 const URL = "https://striveschool-api.herokuapp.com/api/comments/";
 class CommentedArea extends Component {
     state = {
@@ -28,18 +30,7 @@ class CommentedArea extends Component {
     };
 
     render() {
-        return (
-            <>
-                <ListGroup>
-                    {this.state.users.map((comment) => (
-                        <ListGroupItem key={`elementId-${comment.elementId}`}>
-                            <span className="d-block">Comment: {comment.comment}</span>
-                            <span className="d-block">Rate: {comment.rate}</span>
-                        </ListGroupItem>
-                    ))}
-                </ListGroup>
-            </>
-        );
+        return <CommentsList usersArr={this.state.users} />;
     }
 }
 export default CommentedArea;
