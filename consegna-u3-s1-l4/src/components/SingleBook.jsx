@@ -19,13 +19,13 @@ class SingleBook extends Component {
         return (
             <Card
                 style={this.state.selected ? { minHeight: "550px", border: "10px solid red" } : { minHeight: "550px" }}
-                onClick={() => this.bordChange()}
             >
                 <Card.Img
                     variant="top"
                     src={this.props.img}
                     className="img-fluid object-fit-contain "
                     style={{ maxHeight: "250px" }}
+                    onClick={() => this.bordChange()}
                 />
                 <Card.Body className="d-flex flex-column align-content-baseline justify-content-end">
                     <Card.Title>{this.props.title}</Card.Title>

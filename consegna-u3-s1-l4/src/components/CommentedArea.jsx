@@ -1,6 +1,6 @@
 import { Component } from "react";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
 import CommentsList from "./CommentsList";
+import AddComment from "./AddComment";
 
 const URL = "https://striveschool-api.herokuapp.com/api/comments/";
 class CommentedArea extends Component {
@@ -30,7 +30,12 @@ class CommentedArea extends Component {
     };
 
     render() {
-        return <CommentsList usersArr={this.state.users} />;
+        return (
+            <>
+                <CommentsList usersArr={this.state.users} />
+                <AddComment />
+            </>
+        );
     }
 }
 export default CommentedArea;
